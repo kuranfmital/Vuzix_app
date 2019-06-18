@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        //setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
             val originalText = textDisplay.text.toString()
@@ -154,15 +154,16 @@ fun beginListenForData() {
                         val b = packetBytes[i]
                         //System.out.println("b = " + b + " and delimeter = " + delimiter)
                         if (b == delimiter) {
-                            val encodedBytes = ByteArray(readBufferPosition)
-                            System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.size)
-                            val char: Charset = Charset.forName("US-ASCII")
-                            val data = String(encodedBytes, char)
-                            val displayedText = textDisplay.text.toString()
-                            val newText: String = displayedText + data
-                            System.out.println("Receiving Data: " + data)
+                            val encodedBytes = ByteArray(readBufferPosition);
+                            System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.size);
+                            val char: Charset = Charset.forName("US-ASCII");
+                            val data = String(encodedBytes, char);
+                            //val displayedText = textDisplay.text.toString();
+                            //val newText: String = displayedText + data
                             readBufferPosition = 0
                             handler.post(Runnable { textDisplay.setText(data) })
+                            ///System.out.println("Receiving Data: " + data);
+                            readBuffer = ByteArray(1024)
                         } else {
                             readBuffer[readBufferPosition++] = b
                         }
